@@ -11,7 +11,8 @@
 
 #include "code.h"
 #include <stdio.h>
-
+#include <stdbool.h>
+#include <math.h>
 /*
  * code.c - Assignment 8: File Access and Math Functions
  *
@@ -48,7 +49,21 @@
  *    - Close the file and report success only if writing and closing worked.
  */
 // TODO
+bool create_abs_txt(const char *filename, int a)
+{
+    FILE *f = fopen(filename, "w");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    int a = abs(a);
+    fprintf(filename, "%d\n", a);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 2. create_fabs_txt (returns bool; parameters: filename, double value)
  *    - Same idea as the previous function, but for a double:
@@ -56,7 +71,21 @@
  *    - Open mode: write (create / overwrite).
  */
 // TODO
+bool create_fabs_txt(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "w");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    a = fabs(a);
+    fprintf(filename, "%.2f\n", a);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 3. append_sqrt_txt (returns bool; parameters: filename, double value)
  *    - Invalid input: negative value -> return false, do not touch the file.
@@ -65,7 +94,21 @@
  *    - Close and report success.
  */
 // TODO
+bool append_sqrt_txt(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "a");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    a = sqrt(a);
+    fprintf(filename, "%.2f\n", a);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 4. append_pow_txt (returns bool; parameters: filename, double base, double exponent)
  *    - Invalid input: base equal to zero AND exponent negative
@@ -74,7 +117,21 @@
  *      with two decimal digits, close, report success.
  */
 // TODO
+bool append_pow_txt(const char *filename, double base, double exp)
+{
+    FILE *f = fopen(filename, "a");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double result = pow(base, exp);
+    fprintf(filename, "%.2f\n", result);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 5. create_ceil_floor_txt (returns bool; parameters: filename, double value)
  *    - Open in WRITE mode (create / overwrite).
@@ -83,7 +140,23 @@
  *    - Success requires that both writes AND the close worked.
  */
 // TODO
+bool create_ceil_floor_txt(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "w");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double cl = ceil(a);
+    double flr = floor(a);
+    fprintf(filename, "%.2f\n", cl);
+    fprintf(filename, "%.2f\n", flr);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 6. append_round_txt (returns bool; parameters: filename, double value)
  *    - Open in APPEND mode, write round(value) as a new line
@@ -91,7 +164,21 @@
  *    - No invalid input exists for this function.
  */
 // TODO
+bool append_round_txt(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "a");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double rnd = round(a);
+    fprintf(filename, "%.2f\n", rnd);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 7. append_fmod_txt (returns bool; parameters: filename, double x, double y)
  *    - Invalid input: y equal to zero -> return false, do not touch the file.
@@ -99,7 +186,21 @@
  *      with two decimal digits, close, report success.
  */
 // TODO
+bool append_fmod_txt(const char *filename, double a, double b)
+{
+    FILE *f = fopen(filename, "a");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double result = fmod(a, b);
+    fprintf(filename, "%.2f\n", result);
+    fclose(filename);
+   
+
+    return true;
+}
 /*
  * 8. load_txt_values (returns int; parameters: filename, double array, int max_count)
  *    - Open the file for reading. If it cannot be opened, return -1.
@@ -113,7 +214,22 @@
  *    - Close the file and return the counter.
  */
 // TODO
+int load_txt_values(const char *filename, double *arr[1], int a)
+{
+    FILE *f = fopen(filename, "r");
+    if(f == NULL)
+    {
+        return -1;
+    }
 
+    int counter = 0;
+    fscanf(f, "%lf", counter);
+
+    fclose(filename);
+   
+
+    return counter;
+}
 /*
  * 9. clear_file (returns bool; parameters: filename)
  *    - Think: which open mode removes all existing content
@@ -122,7 +238,16 @@
  *    - Report success only if both the open and the close worked.
  */
 // TODO
-
+bool clear_file(const char *filename)
+{
+    FILE *f = fopen(filename, "w");
+    if(f == NULL)
+    {
+        return false;
+    }
+    fclose(filename);
+    return true;
+}
 
 /* ========================= PART B: Binary mode ========================= */
 
@@ -135,7 +260,21 @@
  *     - Success: fwrite reported 1 element written AND the close worked.
  */
 // TODO
+bool create_abs_bin(const char *filename, int a)
+{
+    FILE *f = fopen(filename, "wb");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    int ab = abs(a);
+    fwrite(sizeof(ab), 1, filename);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 11. create_fabs_bin (returns bool; parameters: filename, double value)
  *     - Same idea as above, but the stored value is a double (fabs of the input).
@@ -144,7 +283,21 @@
  *       of size sizeof(double).
  */
 // TODO
+bool create_fabs_bin(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "wb");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double fab = fabs(a);
+    fwrite(sizeof(fab), 1, filename);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 12. append_sqrt_bin (returns bool; parameters: filename, double value)
  *     - Invalid input: negative value -> return false BEFORE opening the file.
@@ -153,7 +306,21 @@
  *     - Close and report success.
  */
 // TODO
+bool append_sqrt_bin(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "ab");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double sqart = sqrt(a);
+    fwrite(sizeof(sqart), 1, filename);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 13. append_pow_bin (returns bool; parameters: filename, double base, double exponent)
  *     - Invalid input: base equal to zero AND exponent negative
@@ -162,7 +329,21 @@
  *       close, report success.
  */
 // TODO
+bool append_pow_bin(const char *filename, double a, double b)
+{
+    FILE *f = fopen(filename, "ab");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double pwr = pow(a,b);
+    fwrite(sizeof(pwr), 1, filename);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 14. create_ceil_floor_bin (returns bool; parameters: filename, double value)
  *     - Open in BINARY WRITE mode (create / overwrite).
@@ -173,7 +354,23 @@
  *     - Success requires that all writes AND the close worked.
  */
 // TODO
+bool create_ceil_floor_bin(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "wb");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double flr = floor(a);
+    double cl = ceil(a);
+    fwrite(sizeof(cl), 1, filename);
+    fwrite(sizeof(flr), 1, filename);
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 15. append_round_bin (returns bool; parameters: filename, double value)
  *     - Open in BINARY APPEND mode, write round(value) as ONE double,
@@ -181,7 +378,22 @@
  *     - No invalid input exists for this function.
  */
 // TODO
+bool append_round_bin(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "ab");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double rnd = round(a);
+    fwrite(sizeof(rnd), 1, filename);
+
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 16. append_fmod_bin (returns bool; parameters: filename, double x, double y)
  *     - Invalid input: y equal to zero -> return false, do not touch the file.
@@ -189,7 +401,22 @@
  *       close, report success.
  */
 // TODO
+bool append_fmod_bin(const char *filename, double a)
+{
+    FILE *f = fopen(filename, "ab");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    double fmd = fmod(a);
+    fwrite(sizeof(fmd), 1, filename);
+
+    fclose(filename);
+    
+
+    return true;
+}
 /*
  * 17. load_abs_bin (returns bool; parameters: filename, int pointer out)
  *     - Open in BINARY READ mode. If it cannot be opened, return false.

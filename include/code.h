@@ -1,11 +1,13 @@
-//char *AUTHOR_NAME        = (char *) "Your Name";
+//char *AUTHOR_NAME        = (char *) "Brayden Tadlock";
 //char *AUTHOR_AUTHORSHIP  = (char *) "I acknowledge that I have worked on this
 // assignment independently, except where explicitly noted and referenced.
 // Any collaboration or use of external resources has been properly cited.
 // I am fully aware of the consequences of academic dishonesty and agree to
 // abide by the university's academic integrity policy.";
-
-
+#ifndef CODE_H
+#define CODE_H
+#include <stdio.h>
+#include <stdbool.h>
 /*
  * code.h - Assignment 8: File Access and Math Functions
  *
@@ -66,6 +68,16 @@
  */
 
 /* TODO: write the prototypes for functions 1-9 here */
+bool create_abs_txt(const char *filename, int a);
+bool create_fabs_txt(const char *filename, double a);
+bool append_sqrt_txt(const char *filename, double a);
+bool append_pow_txt(const char *filename, double base, double exp);
+bool create_ceil_floor_txt(const char *filename, double a);
+bool append_round_txt(const char *filename, double a);
+bool append_fmod_txt(const char *filename, double a, double b);
+int load_txt_values(const char *filename, double *arr[1], int a);
+bool clear_file(const char *filename);
+
 
 
 /* ========================= PART B: Binary mode ========================= */
@@ -122,6 +134,18 @@
  */
 
 /* TODO: write the prototypes for functions 10-20 here */
+bool create_abs_bin(const char *filename, int a);
+bool create_fabs_bin(const char *filename, double a);
+bool append_sqrt_bin(const char *filename, double a);
+bool append_pow_bin(const char *filename, double a, double b);
+bool create_ceil_floor_bin(const char *filename, double a);
+bool append_round_bin(const char *filename, double a);
+bool append_fmod_bin(const char *filename, double a);
+
+int load_bin_values(const char *filename, double *arr[1], int a);
+bool load_bin_value_at(const char *filename, int i, double *ouptut);
+long get_file_size(const char *filename);
 
 
 /* TODO: close the include guard here */
+ #endif
