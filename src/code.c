@@ -401,7 +401,7 @@ bool append_round_bin(const char *filename, double a)
  *       close, report success.
  */
 // TODO
-bool append_fmod_bin(const char *filename, double a)
+bool append_fmod_bin(const char *filename, double a, double b)
 {
     FILE *f = fopen(filename, "ab");
     if(f == NULL)
@@ -409,7 +409,12 @@ bool append_fmod_bin(const char *filename, double a)
         return false;
     }
 
-    double fmd = fmod(a);
+    if(b == 0)
+    {
+        return false;
+    }
+
+    double fmd = fmod(a, b);
     fwrite(sizeof(fmd), 1, filename);
 
     fclose(filename);
@@ -427,7 +432,19 @@ bool append_fmod_bin(const char *filename, double a)
  *       A file that is too short makes the read function return 0.
  */
 // TODO
+bool load_abs_bin(const char *filename, int *output)
+{
+    FILE *f = fopen(filename, "rb");
+    if(f == NULL)
+    {
+        return false;
+    }
 
+    int result = fread(output, sizeof(int), 1, f);
+    fclose(f);
+
+    return result == 1;
+}
 /*
  * 18. load_bin_values (returns int; parameters: filename, double array, int max_count)
  *     - Open in BINARY READ mode. If it cannot be opened, return -1.
@@ -439,7 +456,28 @@ bool append_fmod_bin(const char *filename, double a)
  *     - Close the file and return the counter.
  */
 // TODO
+int load_bin_values(const char *filename, double *arr[1], int a)
+{
+    FILE *f = fopen(filename, "rb");
+    if(f == NULL)
+    {
+        return -1;
+    }
 
+    int counter = 0;
+    while(counter < a)
+    {
+        int result = fread(&arr[counter], sizeof(double), 1, f);
+        if(result != 1)
+        {
+            break;
+        }
+        counter++;
+    }
+
+    fclose(f);
+    return counter;
+}
 /*
  * 19. load_bin_value_at (returns bool; parameters: filename, int index, double pointer out)
  *     - Invalid input: negative index -> return false BEFORE opening the file.
@@ -453,7 +491,31 @@ bool append_fmod_bin(const char *filename, double a)
  *       (a file that is too short gives 0).
  */
 // TODO
+bool load_bin_value_at(const char *filename, int i, double *output)
+{
+    if(i < 0)
+    {
+        return false;
+    }
 
+    FILE *f = fopen(filename, "rb");
+    if(f == NULL)
+    {
+        return false;
+    }
+
+    long offset = (long)i * sizeof(double);
+    if(fseek(f, offset, SEEK_SET) != 0)
+    {
+        fclose(f);
+        return false;
+    }
+
+    int result = fread(output, sizeof(double), 1, f);
+    fclose(f);
+
+    return result == 1;
+}
 /*
  * 20. get_file_size (returns long; parameters: filename)
  *     - Open in BINARY READ mode. If it cannot be opened, return -1.
@@ -464,3 +526,21 @@ bool append_fmod_bin(const char *filename, double a)
  *     - Close the file and return the stored size.
  */
 // TODO
+long get_file_size(const char *filename)
+{
+    FILE *f = fopen(filename, "rb");
+    if(f == NULL)
+    {
+        return -1;
+    }
+
+    if(fseek(f, 0, SEEK_END) != 0)
+    {
+        fclose(f);
+        return -1;
+    }
+
+    long size = ftell(f);
+    fclose(f);
+    return size;
+}
