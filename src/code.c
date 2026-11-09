@@ -57,7 +57,7 @@ bool create_abs_txt(const char *filename, int a)
         return false;
     }
 
-    int a = abs(a);
+    a = abs(a);
     fprintf(filename, "%d\n", a);
     fclose(filename);
     
