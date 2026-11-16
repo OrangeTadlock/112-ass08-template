@@ -97,6 +97,10 @@ bool create_fabs_txt(const char *filename, double a)
 // TODO
 bool append_sqrt_txt(const char *filename, double a)
 {
+    if(a < 0)
+    {
+        return false;
+    }
     FILE *f = fopen(filename, "a");
     if(f == NULL)
     {
@@ -120,6 +124,10 @@ bool append_sqrt_txt(const char *filename, double a)
 // TODO
 bool append_pow_txt(const char *filename, double base, double exp)
 {
+    if(base == 0 && exp < 0)
+    {
+        return false;
+    }
     FILE *f = fopen(filename, "a");
     if(f == NULL)
     {
@@ -189,6 +197,10 @@ bool append_round_txt(const char *filename, double a)
 // TODO
 bool append_fmod_txt(const char *filename, double a, double b)
 {
+    if(b == 0)
+    {
+        return false;
+    }
     FILE *f = fopen(filename, "a");
     if(f == NULL)
     {
@@ -215,21 +227,34 @@ bool append_fmod_txt(const char *filename, double a, double b)
  *    - Close the file and return the counter.
  */
 // TODO
-int load_txt_values(const char *filename, double *arr[1], int a)
+int load_txt_values(const char *filename, double *arr[], int a)
+{
 {
     FILE *f = fopen(filename, "r");
-    if(f == NULL)
+
+    if (f == NULL)
     {
         return -1;
     }
 
-    double counter = 0;
-    fscanf(f, "%lf", &counter);
+    int count = 0;
+    double value;
+
+    while (count < a)
+    {
+        if (fscanf(f, "%lf", &value) != 1)
+        {
+            break;
+        }
+
+        arr[count] = value;
+        count++;
+    }
 
     fclose(f);
-   
 
-    return counter;
+    return count;
+}
 }
 /*
  * 9. clear_file (returns bool; parameters: filename)
@@ -309,6 +334,10 @@ bool create_fabs_bin(const char *filename, double a)
 // TODO
 bool append_sqrt_bin(const char *filename, double a)
 {
+    if(a < 0)
+    {
+        return false;
+    }
     FILE *f = fopen(filename, "ab");
     if(f == NULL)
     {
@@ -332,6 +361,10 @@ bool append_sqrt_bin(const char *filename, double a)
 // TODO
 bool append_pow_bin(const char *filename, double a, double b)
 {
+    if(a == 0 && b < 0)
+    {
+        return false;
+    }
     FILE *f = fopen(filename, "ab");
     if(f == NULL)
     {
@@ -459,7 +492,7 @@ bool load_abs_bin(const char *filename, int *output)
  *     - Close the file and return the counter.
  */
 // TODO
-int load_bin_values(const char *filename, double *arr[1], int a)
+int load_bin_values(const char *filename, double *arr[], int a)
 {
     FILE *f = fopen(filename, "rb");
     if(f == NULL)
