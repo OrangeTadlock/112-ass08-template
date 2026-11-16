@@ -140,7 +140,7 @@ bool append_sqrt_bin(const char *filename, double a);
 bool append_pow_bin(const char *filename, double a, double b);
 bool create_ceil_floor_bin(const char *filename, double a);
 bool append_round_bin(const char *filename, double a);
-bool append_fmod_bin(const char *filename, double a);
+bool append_fmod_bin(const char *filename, double a, double b);
 
 int load_bin_values(const char *filename, double *arr[1], int a);
 bool load_bin_value_at(const char *filename, int i, double *ouptut);
