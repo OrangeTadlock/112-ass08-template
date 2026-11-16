@@ -223,7 +223,7 @@ int load_txt_values(const char *filename, double *arr[1], int a)
         return -1;
     }
 
-    int counter = 0;
+    double counter = 0;
     fscanf(f, "%lf", &counter);
 
     fclose(f);
@@ -384,6 +384,7 @@ bool append_round_bin(const char *filename, double a)
     FILE *f = fopen(filename, "ab");
     if(f == NULL)
     {
+        fclose(f);
         return false;
     }
 
@@ -404,14 +405,14 @@ bool append_round_bin(const char *filename, double a)
 // TODO
 bool append_fmod_bin(const char *filename, double a, double b)
 {
-    FILE *f = fopen(filename, "ab");
-    if(f == NULL)
+        if(b == 0)
     {
         return false;
     }
-
-    if(b == 0)
+    FILE *f = fopen(filename, "ab");
+    if(f == NULL)
     {
+        fclose(f);
         return false;
     }
 
@@ -438,6 +439,7 @@ bool load_abs_bin(const char *filename, int *output)
     FILE *f = fopen(filename, "rb");
     if(f == NULL)
     {
+        fclose(f);
         return false;
     }
 
