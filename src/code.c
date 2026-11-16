@@ -227,9 +227,12 @@ bool append_fmod_txt(const char *filename, double a, double b)
  *    - Close the file and return the counter.
  */
 // TODO
-int load_txt_values(const char *filename, double *arr[1], int a)
+int load_txt_values(const char *filename, double arr[], int a)
 {
-{
+    if (filename == NULL || arr == NULL || a < 0)
+    {
+        return -1;
+    }
     FILE *f = fopen(filename, "r");
 
     if (f == NULL)
@@ -238,7 +241,7 @@ int load_txt_values(const char *filename, double *arr[1], int a)
     }
 
     int count = 0;
-    double *value;
+    double value;
 
     while (count < a)
     {
@@ -255,7 +258,7 @@ int load_txt_values(const char *filename, double *arr[1], int a)
 
     return count;
 }
-}
+
 /*
  * 9. clear_file (returns bool; parameters: filename)
  *    - Think: which open mode removes all existing content
@@ -492,8 +495,12 @@ bool load_abs_bin(const char *filename, int *output)
  *     - Close the file and return the counter.
  */
 // TODO
-int load_bin_values(const char *filename, double *arr[1], int a)
+int load_bin_values(const char *filename, double arr[], int a)
 {
+    if (filename == NULL || arr == NULL || a < 0)
+    {
+        return -1;
+    }
     FILE *f = fopen(filename, "rb");
     if(f == NULL)
     {

@@ -75,7 +75,7 @@ bool append_pow_txt(const char *filename, double base, double exp);
 bool create_ceil_floor_txt(const char *filename, double a);
 bool append_round_txt(const char *filename, double a);
 bool append_fmod_txt(const char *filename, double a, double b);
-int load_txt_values(const char *filename, double *arr[1], int a);
+int load_txt_values(const char *filename, double arr[], int a);
 bool clear_file(const char *filename);
 
 
@@ -142,8 +142,8 @@ bool create_ceil_floor_bin(const char *filename, double a);
 bool append_round_bin(const char *filename, double a);
 bool append_fmod_bin(const char *filename, double a, double b);
 
-int load_bin_values(const char *filename, double *arr[1], int a);
-bool load_bin_value_at(const char *filename, int i, double *ouptut);
+int load_bin_values(const char *filename, double arr[], int a);
+bool load_bin_value_at(const char *filename, int i, double *output);
 long get_file_size(const char *filename);
 
 
