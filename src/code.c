@@ -58,8 +58,8 @@ bool create_abs_txt(const char *filename, int a)
     }
 
     a = abs(a);
-    fprintf(filename, "%d\n", a);
-    fclose(filename);
+    fprintf(f, "%d\n", a);
+    fclose(f);
     
 
     return true;
@@ -80,8 +80,8 @@ bool create_fabs_txt(const char *filename, double a)
     }
 
     a = fabs(a);
-    fprintf(filename, "%.2f\n", a);
-    fclose(filename);
+    fprintf(f, "%.2f\n", a);
+    fclose(f);
    
 
     return true;
@@ -103,8 +103,8 @@ bool append_sqrt_txt(const char *filename, double a)
     }
 
     a = sqrt(a);
-    fprintf(filename, "%.2f\n", a);
-    fclose(filename);
+    fprintf(f, "%.2f\n", a);
+    fclose(f);
    
 
     return true;
@@ -126,8 +126,8 @@ bool append_pow_txt(const char *filename, double base, double exp)
     }
 
     double result = pow(base, exp);
-    fprintf(filename, "%.2f\n", result);
-    fclose(filename);
+    fprintf(f, "%.2f\n", result);
+    fclose(f);
    
 
     return true;
@@ -150,9 +150,9 @@ bool create_ceil_floor_txt(const char *filename, double a)
 
     double cl = ceil(a);
     double flr = floor(a);
-    fprintf(filename, "%.2f\n", cl);
-    fprintf(filename, "%.2f\n", flr);
-    fclose(filename);
+    fprintf(f, "%.2f\n", cl);
+    fprintf(f, "%.2f\n", flr);
+    fclose(f);
    
 
     return true;
@@ -173,8 +173,8 @@ bool append_round_txt(const char *filename, double a)
     }
 
     double rnd = round(a);
-    fprintf(filename, "%.2f\n", rnd);
-    fclose(filename);
+    fprintf(f, "%.2f\n", rnd);
+    fclose(f);
    
 
     return true;
@@ -195,8 +195,8 @@ bool append_fmod_txt(const char *filename, double a, double b)
     }
 
     double result = fmod(a, b);
-    fprintf(filename, "%.2f\n", result);
-    fclose(filename);
+    fprintf(f, "%.2f\n", result);
+    fclose(f);
    
 
     return true;
@@ -223,9 +223,9 @@ int load_txt_values(const char *filename, double *arr[1], int a)
     }
 
     int counter = 0;
-    fscanf(f, "%lf", counter);
+    fscanf(f, "%lf", &counter);
 
-    fclose(filename);
+    fclose(f);
    
 
     return counter;
@@ -245,7 +245,7 @@ bool clear_file(const char *filename)
     {
         return false;
     }
-    fclose(filename);
+    fclose(f);
     return true;
 }
 
