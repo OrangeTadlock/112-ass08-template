@@ -227,7 +227,7 @@ bool append_fmod_txt(const char *filename, double a, double b)
  *    - Close the file and return the counter.
  */
 // TODO
-int load_txt_values(const char *filename, double *arr[], int a)
+int load_txt_values(const char *filename, double arr[], int a)
 {
 {
     FILE *f = fopen(filename, "r");
@@ -492,7 +492,7 @@ bool load_abs_bin(const char *filename, int *output)
  *     - Close the file and return the counter.
  */
 // TODO
-int load_bin_values(const char *filename, double *arr[], int a)
+int load_bin_values(const char *filename, double arr[], int a)
 {
     FILE *f = fopen(filename, "rb");
     if(f == NULL)
