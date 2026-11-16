@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <stdlib.h>
 /*
  * code.c - Assignment 8: File Access and Math Functions
  *
