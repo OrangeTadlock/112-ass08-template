@@ -263,18 +263,18 @@ bool clear_file(const char *filename)
 bool create_abs_bin(const char *filename, int a)
 {
     FILE *f = fopen(filename, "wb");
-    if(f == NULL)
-    {
+
+    if (f == NULL)
         return false;
-    }
 
-    int ab = abs(a);
-    fwrite(sizeof(ab), 1, filename);
-    fclose(filename);
-    
+    int abs_value = abs(a);
 
-    return true;
-}
+    size_t written = fwrite(&abs_value, sizeof(int), 1, f);
+
+    int closed = fclose(f);
+
+    return (written == 1 && closed == 0);
+}    
 /*
  * 11. create_fabs_bin (returns bool; parameters: filename, double value)
  *     - Same idea as above, but the stored value is a double (fabs of the input).
@@ -292,8 +292,8 @@ bool create_fabs_bin(const char *filename, double a)
     }
 
     double fab = fabs(a);
-    fwrite(sizeof(fab), 1, filename);
-    fclose(filename);
+    fwrite(&fab, sizeof(double), 1, f);
+    fclose(f);
     
 
     return true;
@@ -315,8 +315,8 @@ bool append_sqrt_bin(const char *filename, double a)
     }
 
     double sqart = sqrt(a);
-    fwrite(sizeof(sqart), 1, filename);
-    fclose(filename);
+    fwrite(&sqart, sizeof(double), 1, f);
+    fclose(f);
     
 
     return true;
@@ -338,8 +338,8 @@ bool append_pow_bin(const char *filename, double a, double b)
     }
 
     double pwr = pow(a,b);
-    fwrite(sizeof(pwr), 1, filename);
-    fclose(filename);
+    fwrite(&pwr, sizeof(double), 1, f);
+    fclose(f);
     
 
     return true;
@@ -364,9 +364,9 @@ bool create_ceil_floor_bin(const char *filename, double a)
 
     double flr = floor(a);
     double cl = ceil(a);
-    fwrite(sizeof(cl), 1, filename);
-    fwrite(sizeof(flr), 1, filename);
-    fclose(filename);
+    fwrite(&cl, sizeof(double), 1, f);
+    fwrite(&flr, sizeof(double), 1, f);
+    fclose(f);
     
 
     return true;
@@ -387,9 +387,9 @@ bool append_round_bin(const char *filename, double a)
     }
 
     double rnd = round(a);
-    fwrite(sizeof(rnd), 1, filename);
+    fwrite(&rnd, sizeof(double), 1, f);
 
-    fclose(filename);
+    fclose(f);
     
 
     return true;
@@ -415,9 +415,9 @@ bool append_fmod_bin(const char *filename, double a, double b)
     }
 
     double fmd = fmod(a, b);
-    fwrite(sizeof(fmd), 1, filename);
+    fwrite(&fmd, sizeof(double), 1, f);
 
-    fclose(filename);
+    fclose(f);
     
 
     return true;
