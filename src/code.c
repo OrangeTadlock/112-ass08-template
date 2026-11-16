@@ -514,6 +514,7 @@ int load_bin_values(const char *filename, double *arr[1], int a)
     fclose(f);
     return counter;
 }
+
 /*
  * 19. load_bin_value_at (returns bool; parameters: filename, int index, double pointer out)
  *     - Invalid input: negative index -> return false BEFORE opening the file.
